@@ -2,13 +2,13 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 4000
 const cors=require('cors')
-
+require('dotenv').config()
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 // middleware
 app.use(cors());
 app.use(express.json());
 
-
+// console.log(process.env.DB_USER, process.env.DB_PASS)
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
@@ -28,7 +28,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
    
-    await client.connect();
+    // await client.connect();
     const database = client.db("insertDB");
     const jibon = database.collection("haiku");
 
@@ -104,8 +104,7 @@ async function run() {
         console.log('update',query);
         res.send(coffee)
    })
-    // await client.db("admin").command({ ping: 1 });
-    // console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  
   } 
   catch (err) {
     console.error('Error connecting to MongoDB:', err);
